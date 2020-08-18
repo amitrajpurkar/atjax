@@ -8,12 +8,11 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import lombok.extern.slf4j.Slf4j;
 
 @Configuration
-// @Slf4j
+@Slf4j
 @EnableAspectJAutoProxy
-@EnableSwagger2
 @SpringBootApplication(exclude = MongoAutoConfiguration.class)
 public class Bootstrap extends SpringBootServletInitializer {
 
