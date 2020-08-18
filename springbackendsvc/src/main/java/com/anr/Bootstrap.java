@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
@@ -13,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 @Configuration
 @Slf4j
 @EnableAspectJAutoProxy
+@EnableCircuitBreaker
 @SpringBootApplication(exclude = MongoAutoConfiguration.class)
 public class Bootstrap extends SpringBootServletInitializer {
 

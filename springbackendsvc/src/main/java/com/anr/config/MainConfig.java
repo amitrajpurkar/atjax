@@ -23,6 +23,8 @@ import org.springframework.web.filter.CommonsRequestLoggingFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import com.google.gson.Gson;
+
 @Configuration
 @ComponentScan
 @EnableWebMvc
@@ -81,6 +83,11 @@ public class MainConfig extends WebMvcConfigurerAdapter implements ApplicationCo
         frBean.setFilter(filter);
         frBean.setEnabled(false);
         return frBean;
+    }
+
+    @Bean
+    public Gson gson() {
+        return new Gson();
     }
 
 }
