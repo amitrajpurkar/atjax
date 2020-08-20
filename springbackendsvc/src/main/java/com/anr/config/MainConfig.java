@@ -6,12 +6,15 @@ import static org.springframework.aop.interceptor.CustomizableTraceInterceptor.P
 import static org.springframework.aop.interceptor.CustomizableTraceInterceptor.PLACEHOLDER_METHOD_NAME;
 import static org.springframework.aop.interceptor.CustomizableTraceInterceptor.PLACEHOLDER_TARGET_CLASS_SHORT_NAME;
 
+import java.util.concurrent.Executor;
+
 import javax.servlet.Filter;
 
 import org.springframework.aop.Advisor;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.support.ErrorPageFilter;
 import org.springframework.context.ApplicationContext;
@@ -19,10 +22,12 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.filter.CommonsRequestLoggingFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import com.anr.logging.model.SplunkLogRecord;
 import com.google.gson.Gson;
 
 @Configuration
@@ -31,6 +36,9 @@ import com.google.gson.Gson;
 public class MainConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
 
     private ApplicationContext appContext;
+
+    @Autowired
+    private ConfigProperties appProps;
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
@@ -88,6 +96,38 @@ public class MainConfig extends WebMvcConfigurerAdapter implements ApplicationCo
     @Bean
     public Gson gson() {
         return new Gson();
+    }
+
+    @Bean(name = "SBThreadPool")
+    public Executor SBLoggingThreadExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(appProps.getExecutor().getCorePoolSize());
+        executor.setMaxPoolSize(appProps.getExecutor().getMaxPoolSize());
+        executor.setQueueCapacity(appProps.getExecutor().getQueueCapacity());
+        executor.setThreadNamePrefix(appProps.getExecutor().getThreadNamePrefix());
+        executor.setDaemon(true);
+        executor.setWaitForTasksToCompleteOnShutdown(true);
+        executor.initialize();
+
+        return executor;
+    }
+
+    /**
+     * set from the application-environment, the properties from app-server, this can happen onetime
+     * at application startup; The splunk event needs to be captured at each transaction
+     *
+     * @return
+     */
+    @Bean
+    public SplunkLogRecord getSplunkLogRecord() {
+        SplunkLogRecord rec = new SplunkLogRecord();
+        rec.setEnv("local");
+        rec.setReporter(null);
+        rec.setReportType(null);
+        rec.setComponent(null);
+        rec.setHostname("localhost");
+
+        return rec;
     }
 
 }

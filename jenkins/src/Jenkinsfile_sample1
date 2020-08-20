@@ -1,0 +1,159 @@
+#!/usr/bin/env groovy
+@Library('file to include')
+import com.example.helpers.Build
+import com.example.helpers.Workspace
+import com.example.utils.Openshift
+
+def bld = new Build()
+def wspace = new Worksapce()
+def osh = new Openshift()
+def appReleaseTag = ""
+
+def project = "sbsvc"
+def appName = "sb-svc"
+def checkoutAppOcpConfigBranch = "master"
+
+def gradleTasks="clean compileJava war"
+def baselineCode = false
+def gradleVersion = "Gradle-5.2.1"
+
+pipeline {
+    agent any
+    
+    options {
+        disableConcurrentBuilds()
+        buildDiscard(logRotator(numToKeepStr: '30', daysToKeepStr: '15'))
+        skipDefaultCheckout(true)
+        timestamps()
+        skipStagesAfterUnstable()
+    }
+    
+    parameters {
+        string (
+            name: 'RELEASE_VERSION',
+            defaultValue: '',
+            description: '[Optional] Applciation Docker release tag (eg master, 1.0.0, 1.0.0.15). Please use this if you need to deploy an earlier version of code that is already built (No build will be done in this case)'
+        )
+        string (
+            name: 'TICKET',
+            defaultValue: '',
+            description: '[N/A for non-Prod deploy] Change ticket for Production deployment'
+        )
+        choice (
+            name: 'DEPLOY_TO',
+            defaultValue: ['Stage','Unit','Test','Prod'],
+            description: 'Which environment you need to deploy?'
+        )
+    }
+    
+    stages {
+        stage('Prepare') {
+            steps {
+                script {
+                    log.info "Explicit scm checkout ..."
+                    checkout scm
+                    wspace.init()
+                    wspace.checkoutAppOcpConfig(appName, checkoutAppOcpBranch)
+                    appReleaseTag = wspace.getBuildProperty("version") + "." + env.BUILD_NUMBER
+                    prodNotification = wspace.getBuildProperty("pipeline.prda.notify")
+                }
+            }
+        }
+        
+        stage('Build Artifacts') {
+            steps {
+                script {
+                    if(env.RELEASE_VERSION != '') {
+                        log.info "User entered a release version. Skipping Build Artifact Step"
+                    } else {
+                        sh "rm -rf ${WORKSPACE}/.gradle"
+                        bld.gradle(gradleVersion, " clean ")
+                        bld.gradle(gradleVersion, gradleTasks + " --refresh-dependencies")
+                        prepareForBuildImage()
+                    }
+                }
+            }
+        }
+        
+        stage('Build Image') {
+            steps {
+                script {
+                    if(env.RELEASE_VERSION == '') {
+                        appReleaseTag = osh.buildAppImage(appName, appReleaseTag)
+                        
+                    } else {
+                        log.info "Using User entered build version, Skipping Build Image"
+                        appReleaseTag = env.RELEASE_VERSION
+                    }
+                }
+            }
+        }
+        
+        stage('Deploy Unit') {
+            when { xpression{ env.DEPLOY_TO = 'Unit'} }
+            steps {
+                script {
+                    osh.deploy(projectName + "-unit", appName, "unit", appReleaseTag)
+                }
+            }
+        }
+        
+        stage('Deploy Test') {
+            when { xpression{ env.DEPLOY_TO = 'Test'} }
+            steps {
+                script {
+                    osh.deploy(projectName + "-tsta", appName, "tsta", appReleaseTag)
+                }
+            }
+        }
+        
+        stage('Deploy Stage') {
+            when { xpression{ env.DEPLOY_TO = 'Stage'} }
+            steps {
+                script {
+                    osh.deploy(projectName + "-stga", appName, "stga", appReleaseTag)
+                }
+            }
+        }
+        
+        stage('Prod Deploy Approval') {
+            when { xpression{ env.DEPLOY_TO = 'Prod'} }
+            steps {
+                checkRemedyStatus prod: 'true', notification: prodNotification, ticket: params.TICKET
+            }
+        }
+        
+        stage('Deploy Prod') {
+            when { xpression{ env.DEPLOY_TO = 'Prod'} }
+            steps {
+                script {
+                    osh.deploy(projectName + "-prda", appName, "prda", appReleaseTag)
+                }
+            }
+        }
+        
+        stage('Baseline Code') {
+            when { xpression{ env.DEPLOY_TO = 'Prod'} }
+            steps {
+                script {
+                    wspace.tagAppCodeAndConfigRepo(appReleaseTag)
+                }
+            }
+        }
+    }// close stages
+    
+}// close pipeline
+
+def prepareForBuildImage() {
+    log.info "Preparing Image contents.. "
+    log.info "Copy necessary build artifacts into the deployments dir.. "
+    sh """
+       rm -rf tmp/deployments
+       mkdir -p tmp/deployments
+       find build -name "*.war" -exec sh -c 'cp "\$@" "\$0"' tmp/deployments {} +
+       mv tmp/deployments/*.war tmp/deployments/sb-svc.war
+       chmod -R 777 tmp
+       echo "Displaying deployment artifacts ..."
+       ls -lt tmp/deployments
+    """
+}
