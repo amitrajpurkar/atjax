@@ -57,7 +57,7 @@ dependencies {
 	implementation 'org.projectlombok:lombok'
 	
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+		//exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 	testImplementation 'junit:junit:4.13'
 	//testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
@@ -67,6 +67,23 @@ dependencies {
 	testImplementation 'com.tngtech.archunit:archunit:0.9.1'
 }
 
-test {
-	useJUnitPlatform()
+//test {
+//	useJUnitPlatform()
+//}
+
+jacocoTestReport {
+  group "Reporting"
+  reports {
+    xml.enabled true
+    csv.enabled true
+    html.destination file("${buildDir}/reports/coverage")
+  }
+  afterEvaluate {
+    classDirectories.from = files(classDirectories.files.collect {
+      fileTree(dir: it, exclude:[
+        "com/anr/model/**",
+        "com/anr/logging/model/**",
+      ])
+    })
+  }
 }
