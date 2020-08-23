@@ -15,6 +15,8 @@ import org.springframework.web.client.RestClientException;
 import com.anr.config.ConfigProperties;
 import com.anr.exception.ErrorRootElement;
 import com.anr.exception.SBNestedException;
+import com.anr.logging.LogForwarder;
+import com.anr.logging.model.SplunkEvent;
 import com.google.gson.Gson;
 import com.mongodb.MongoException;
 import com.mongodb.MongoSecurityException;
@@ -26,6 +28,9 @@ import com.netflix.hystrix.exception.HystrixTimeoutException;
 public class SBUtil {
     @Autowired
     private ConfigProperties appProps;
+
+    @Autowired
+    private LogForwarder logforwarder;
 
     @Autowired
     private Gson gson;
@@ -132,5 +137,23 @@ public class SBUtil {
         }
 
         return err;
+    }
+
+    public void logToSplunkOrSimilar(SplunkEvent event, long startTimeMS) {
+        long responseTimeMS = 0;
+        if (TransactionType.Request.equals(event.getTransactionType())) {
+            event.setProcesStartTs(new SimpleDateFormat(DATE_FORMAT_WITH_MS).format(new Date(startTimeMS)));
+        } else if (TransactionType.Response.equals(event.getTransactionType())
+                || TransactionType.Failure.equals(event.getTransactionType())) {
+            responseTimeMS = System.currentTimeMillis() - startTimeMS;
+            event.setReponseTimeInMillis(responseTimeMS);
+            event.setProcessEndTs(new SimpleDateFormat(DATE_FORMAT_WITH_MS).format(new Date()));
+            event.setProcesStartTs(new SimpleDateFormat(DATE_FORMAT_WITH_MS).format(new Date(startTimeMS)));
+        }
+        logforwarder.logEvent(event);
+    }
+
+    public enum TransactionType {
+        Request, Response, Failure, InProcess;
     }
 }

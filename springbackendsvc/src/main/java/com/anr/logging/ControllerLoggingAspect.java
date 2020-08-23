@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.anr.common.SBUtil;
+import com.anr.common.SBUtil.TransactionType;
 import com.anr.config.ConfigProperties;
 import com.anr.controller.ControllerFailureResponses;
+import com.anr.logging.model.SplunkEvent.SplunkEventBuilder;
 import com.anr.model.SBResponseModel;
 import com.google.gson.Gson;
 import com.netflix.hystrix.HystrixCommand;
@@ -42,6 +44,8 @@ public class ControllerLoggingAspect {
             String locale, String field1, String field2) {
         long startTime = System.currentTimeMillis();
         // construct a logBuilder event
+        SplunkEventBuilder bldr = new SplunkEventBuilder("Default-Api", "localhost", sourceChannel, transactionID);
+        bldr.transactionType(TransactionType.Request);
         sbutil.logInfo(transactionID, "start time:" + startTime);
 
         HystrixCommand<SBResponseModel> command = new HystrixCommand<SBResponseModel>(cmdConfigDefaultSvc) {
@@ -81,12 +85,17 @@ public class ControllerLoggingAspect {
             errMsg.append(SPACE);
             errMsg.append(response.getErr().getTechMessage());
             messageString = "Failure: " + errMsg.toString();
+            bldr.transactionType(TransactionType.Failure);
+            bldr.addErrorMsg(messageString);
+            bldr.errorCode("ERR-002");
         } else {
             messageString = "Success: " + gson.toJson(response);
+            bldr.transactionType(TransactionType.Response);
         }
 
         messageString += "; timetaken = " + (System.currentTimeMillis() - startTime) + " ms";
         sbutil.logInfo(transactionID, messageString);
+        sbutil.logToSplunkOrSimilar(bldr.build(), startTime);
 
         return response;
     }

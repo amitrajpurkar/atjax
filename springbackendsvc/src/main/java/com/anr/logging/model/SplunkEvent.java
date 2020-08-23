@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.anr.common.SBUtil.TransactionType;
+
 public class SplunkEvent {
     String errorMsg;
     String api;// which service call is this
@@ -12,7 +14,16 @@ public class SplunkEvent {
     String podName;
     String tid;// unique transaction id
     long responseTimeInMillis;
-    String transactionType;// Success, Failure, InProcess
+    TransactionType transactionType;// Success, Failure, InProcess
+
+    public TransactionType getTransactionType() {
+        return transactionType;
+    }
+
+    public void setTransactionType(TransactionType transactionType) {
+        this.transactionType = transactionType;
+    }
+
     String environment;// localhost, unit, stage, prod
     String errorCode;
     List<String> warningCodes;
@@ -61,7 +72,7 @@ public class SplunkEvent {
         String podName;
         String tid;// unique transaction id
         long responseTimeInMillis;
-        String transactionType;// Success, Failure, InProcess
+        TransactionType transactionType;// Success, Failure, InProcess
         String environment;// localhost, unit, stage, prod
         String errorCode;
         List<String> warningCodes;
@@ -116,7 +127,7 @@ public class SplunkEvent {
             return this;
         }
 
-        public SplunkEventBuilder transactionType(String transactionType) {
+        public SplunkEventBuilder transactionType(TransactionType transactionType) {
             this.transactionType = transactionType;
             return this;
         }
