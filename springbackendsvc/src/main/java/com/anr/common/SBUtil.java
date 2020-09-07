@@ -90,7 +90,9 @@ public class SBUtil {
         Throwable rootExcept = NestedExceptionUtils.getMostSpecificCause(e);
         rootCauseMsg = ExceptionUtils.getRootCauseMessage(e);
         rootCauseMsg = StringUtils.isBlank(rootCauseMsg) ? rootExcept.getMessage() : rootCauseMsg;
-        rootCauseMsg = rootCauseMsg + SPACE + rootExcept.getStackTrace()[0].toString();
+        if (rootExcept.getStackTrace().length > 0) {
+            rootCauseMsg += SPACE + rootExcept.getStackTrace()[0].toString();
+        }
 
         return rootCauseMsg;
     }

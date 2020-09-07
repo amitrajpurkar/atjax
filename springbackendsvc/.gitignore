@@ -9,6 +9,7 @@ gradle/
 !**/src/test/**/build/
 /bin/
 bin/
+report/
 
 ### STS ###
 .apt_generated
