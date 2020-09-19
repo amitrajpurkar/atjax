@@ -1,23 +1,37 @@
 package com.anr.javaprac;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
 public class LoopPrac {
     public static void main(String[] argh) {
-        // int t = in.nextInt();// tells how many lines are following..
-        List<Double> numSeries = new ArrayList<>();
-        // for (int i = 0; i < t; i++) {
-        // int a = in.nextInt();
-        // int b = in.nextInt();
-        // int n = in.nextInt();
-        printEachSeries(0, 2, 10);
-        numSeries = new ArrayList<>();
+        // printEachSeries(0, 2, 10);
+        solve(12.00, 20, 8);// 15
+        solve(15.50, 15, 10);// 19
 
-        // printEachSeries(5, 3, 5);
-        // }
+        int[] arr = { 1, 4, 3, 2 };
+        String str = reverseList(arr);
+        System.out.println(str);
 
+    }
+
+    private static String reverseList(int[] arr) {
+        List<String> cloneArr = new ArrayList<>();
+        for (int i : arr) {
+            cloneArr.add(Integer.valueOf(i).toString());
+        }
+        Collections.reverse(cloneArr);
+        CharSequence space = " ";
+        return String.join(space, cloneArr);
+    }
+
+    static void solve(double meal_cost, int tip_percent, int tax_percent) {
+        double tip = meal_cost * (tip_percent / 100.00);
+        double tax = meal_cost * (tax_percent / 100.00);
+        double total = meal_cost + tip + tax;
+        System.out.println(Math.round(total));
     }
 
     public static void printEachSeries(int a, int b, int n) {

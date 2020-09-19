@@ -1,11 +1,23 @@
+buildscript {
+  repositories {
+    jcenter()
+  }
+
+  //dependencies {
+  //  classpath "com.ewerk.gradle.plugins:querydsl-plugin:1.0.3"
+  //}
+}
+
 plugins {
-	id 'org.springframework.boot' version '2.3.2.RELEASE'
-	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
-	id 'java'
-	id 'eclipse'
-	id 'eclipse-wtp'
-	id 'war'
-	id 'jacoco'
+  id 'java'
+  id 'eclipse'
+  id 'eclipse-wtp'
+  id 'war'
+  id 'jacoco'
+  id 'org.springframework.boot' version '2.3.3.RELEASE'
+  id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+  //id 'com.ewerk.gradle.plugins.querydsl' version '1.0.3'
+  //id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
 
 group = 'com.anr'
@@ -37,25 +49,34 @@ dependencies {
 	//springBootArtifacts.each { artifact ->
 	//	implementation 'org.springframework.boot:$artifact'
 	//}
-	implementation 'org.springframework.boot:spring-boot-starter'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-aop'
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	
-	implementation 'org.mongodb:mongodb-driver:3.8.2'
-	//implementation 'io.springfox:springfox-boot-starter:3.0.0'
-	//implementation 'io.springfox:springfox-swagger-ui:2.7.0'
-	implementation 'org.springdoc:springdoc-openapi-ui:1.4.4'
-	implementation 'net.jodah:failsafe:1.1.0'
-	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-hystrix:2.2.4.RELEASE'
-	implementation 'com.google.guava:guava:29.0-jre'
-	implementation 'com.google.code.gson:gson:2.8.6'
-	implementation 'org.codehaus.jackson:jackson-core-asl:1.1.0'
-	implementation 'commons-io:commons-io:2.7'
-	implementation 'org.apache.commons:commons-lang3:3.11'
-	implementation 'org.projectlombok:lombok'
-	
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    //implementation 'org.mongodb:mongodb-driver:3.8.2'
+    //implementation ('com.querydsl:querydsl-mongodb:4.3.1') {
+    //  exclude group: 'org.mongodb', module: 'mongo-java-driver'
+    //}
+    //implementation 'com.querydsl:querydsl-apt:4.3.1'
+    //implementation "com.mysema.querydsl:querydsl-mongodb:3.6.0"
+    
+    //implementation 'io.springfox:springfox-boot-starter:3.0.0'
+    //implementation 'io.springfox:springfox-swagger-ui:2.7.0'
+    implementation 'org.springdoc:springdoc-openapi-ui:1.4.4'
+    
+    implementation 'net.jodah:failsafe:1.1.0'
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-hystrix:2.2.4.RELEASE'
+    
+    implementation 'com.google.guava:guava:29.0-jre'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'org.codehaus.jackson:jackson-core-asl:1.1.0'
+    implementation 'commons-io:commons-io:2.7'
+    implementation 'org.apache.commons:commons-lang3:3.11'
+    implementation 'org.projectlombok:lombok'
+
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		//exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
@@ -66,6 +87,10 @@ dependencies {
 	testImplementation 'org.mockito:mockito-core:1.9.5'
 	testImplementation 'com.tngtech.archunit:archunit:0.9.1'
 }
+
+//querydsl {
+//  springDataMongo = true
+//}
 
 //test {
 //	useJUnitPlatform()

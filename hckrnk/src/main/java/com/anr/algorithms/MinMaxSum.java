@@ -29,12 +29,53 @@ public class MinMaxSum {
         System.out.println("" + minMax.getMin() + " " + minMax.getMax());
     }
 
+    private static void separateEvenOddChars(String word) {
+        StringBuilder ev = null;
+        StringBuilder od = null;
+        ev = new StringBuilder();
+        od = new StringBuilder();
+        for (int j = 0; j < word.length(); j++) {
+            if (j % 2 == 0) {
+                ev.append(word.charAt(j));
+            } else {
+                od.append(word.charAt(j));
+            }
+        }
+        System.out.println(ev.toString() + " " + od.toString());
+    }
+
+    @SuppressWarnings("unused")
+    private void revLoopProblem() {
+        Scanner sc = new Scanner(System.in);
+        StringBuilder ev = null;
+        StringBuilder od = null;
+        String word = null;
+
+        int T = sc.nextInt();
+        sc.nextLine();
+        for (int i = 0; i < T; i++) {
+            word = sc.nextLine();
+            ev = new StringBuilder();
+            od = new StringBuilder();
+            for (int j = 0; j < word.length(); j++) {
+                if (j % 2 == 0) {
+                    ev.append(word.charAt(j));
+                } else {
+                    od.append(word.charAt(j));
+                }
+            }
+            System.out.println(ev.toString() + " " + od.toString());
+        }
+        sc.close();
+    }
+
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         // int[] arr = new int[5];
         //
         // String[] arrItems = scanner.nextLine().split(" ");
+        // String test = scanner.nextLine();
         // scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
         //
         // for (int i = 0; i < 5; i++) {
@@ -48,8 +89,12 @@ public class MinMaxSum {
 
         // int[] arr = { 1, 3, 5, 7, 9 };
         // 256741038 623958417 467905213 714532089 938071625
+
         int[] arr = { 256741038, 623958417, 467905213, 714532089, 938071625 };
         miniMaxSum(arr);
+
+        separateEvenOddChars("Hacker");
+
         // 2063136757 2744467344
     }
 }
