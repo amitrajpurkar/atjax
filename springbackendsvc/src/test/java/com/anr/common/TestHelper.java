@@ -1,15 +1,28 @@
 package com.anr.common;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.util.ResourceUtils;
+
+import com.anr.localmdb.model.Product;
+import com.google.gson.Gson;
 
 public class TestHelper {
+
+    @Autowired
+    private Gson gson;
+
     public static final String URI_DEFSVC = "/api/v1/default";
     public static final String SRC_CHANNEL01 = "Allowed-Channel";
     public static final String SRC_CHANNEL02 = "NotAllowed-Channel";
@@ -26,6 +39,23 @@ public class TestHelper {
 
     public static LocalDateTime convertISODateStringToDate(String isoDateString) {
         return LocalDateTime.parse(isoDateString, DateTimeFormatter.ofPattern("EEE MMM d HH:mm:ss zzz yyyy"));
+    }
+
+    private static String getJsonXmlStr(String inputFile) {
+        File file;
+        try {
+            file = ResourceUtils.getFile(inputFile);
+            return new String(Files.readAllBytes(file.toPath()));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Product getProduct(String jsonFile) {
+        return gson.fromJson(getJsonXmlStr(jsonFile), Product.class);
     }
 
     public static MultiValueMap<String, String> mockReParamsForDefaultApi(String field1Val, String field2Val) {
