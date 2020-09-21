@@ -1,4 +1,4 @@
-package com.anr.model;
+package com.anr.localmdb.model;
 
 import java.util.Date;
 import java.util.List;
@@ -81,6 +81,8 @@ public class InsuranceMember {
         private String hccID;
         private String group;
         private String division;
+        private Date policyStartDate;
+        private Date policyExpiryDate;
         private List<Plan> plans;
 
         @Override
@@ -126,6 +128,22 @@ public class InsuranceMember {
 
         public void setPlans(List<Plan> plans) {
             this.plans = plans;
+        }
+
+        public Date getPolicyStartDate() {
+            return policyStartDate;
+        }
+
+        public void setPolicyStartDate(Date policyStartDate) {
+            this.policyStartDate = policyStartDate;
+        }
+
+        public Date getPolicyExpiryDate() {
+            return policyExpiryDate;
+        }
+
+        public void setPolicyExpiryDate(Date policyExpiryDate) {
+            this.policyExpiryDate = policyExpiryDate;
         }
     }
 

@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.anr.model.InsuranceMember;
-import com.anr.repository.MemberRepository;
+import com.anr.localmdb.model.InsuranceMember;
+import com.anr.localmdb.repository.MemberRepository;
 
 @Component
 public class MemberService {

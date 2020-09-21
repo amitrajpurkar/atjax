@@ -1,4 +1,4 @@
-package com.anr.repository;
+package com.anr.localmdb.repository;
 
 import java.util.List;
 
@@ -8,8 +8,7 @@ import org.springframework.data.mongodb.repository.Query;
 //import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Component;
 
-import com.anr.model.InsuranceMember;
-//import com.anr.model.QInsuranceMember;
+import com.anr.localmdb.model.InsuranceMember;
 
 @Component
 public interface MemberRepository extends MongoRepository<InsuranceMember, String> {
