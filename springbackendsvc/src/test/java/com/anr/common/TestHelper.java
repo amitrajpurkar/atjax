@@ -9,19 +9,12 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.ResourceUtils;
 
-import com.anr.localmdb.model.Product;
-import com.google.gson.Gson;
-
 public class TestHelper {
-
-    @Autowired
-    private Gson gson;
 
     public static final String URI_DEFSVC = "/api/v1/default";
     public static final String SRC_CHANNEL01 = "Allowed-Channel";
@@ -41,7 +34,7 @@ public class TestHelper {
         return LocalDateTime.parse(isoDateString, DateTimeFormatter.ofPattern("EEE MMM d HH:mm:ss zzz yyyy"));
     }
 
-    private static String getJsonXmlStr(String inputFile) {
+    public static String getJsonXmlStr(String inputFile) {
         File file;
         try {
             file = ResourceUtils.getFile(inputFile);
@@ -52,10 +45,6 @@ public class TestHelper {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public Product getProduct(String jsonFile) {
-        return gson.fromJson(getJsonXmlStr(jsonFile), Product.class);
     }
 
     public static MultiValueMap<String, String> mockReParamsForDefaultApi(String field1Val, String field2Val) {

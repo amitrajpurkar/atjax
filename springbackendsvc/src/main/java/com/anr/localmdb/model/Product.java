@@ -17,6 +17,10 @@ public class Product {
     private String description;
     private String price;
 
+    public Product() {
+        super();
+    }
+
     public Product(ProductBuilder pb) {
         id = pb.id;
         name = pb.name;

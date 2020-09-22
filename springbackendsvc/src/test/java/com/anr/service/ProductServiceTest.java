@@ -14,6 +14,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.anr.localmdb.model.Product;
 import com.anr.localmdb.model.Product.ProductBuilder;
 
+/**
+ * https://gitmoji.carloscuesta.me/
+ *
+ * https://github.com/slashsbin/styleguide-git-commit-message
+ *
+ * @author amitr
+ *
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ProductServiceTest {
