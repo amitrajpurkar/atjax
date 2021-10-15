@@ -5,6 +5,7 @@ key jmeter config paramters
 ### load config settings
 
 | users | ramp-up(sec) | loop cnt | hits/min |
+|-------|--------------|----------|----------|
 |200 |3600(1hr) |480 |1600 |
 |200 |900(15min) |120 |1600 |
 |50 |900(15min) |2000 |xxx |
