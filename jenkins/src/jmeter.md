@@ -24,7 +24,7 @@ then each successive thread will be delayed by 4 seconds **
 
 ## command line usage
 
-'''
+```
 jmeter -n -t my-test.jmx -l log.jtl -H my.proxy.server -P 8000
 jmeter -n -t my-test.jmx -l log.jtl -j run-log.txt -e -o output-folder-location
 
@@ -40,12 +40,12 @@ jmeter
   -Jjmeter.save.saveservice.timestamp="yyyy-MM-dd HH:mm:ss"
   -Jjmeter.save.saveservice.print_field_name=true
   -Jjmeter.save.saveservice.url=true
-##  -Jjmeter.save.saveservice.output_format=xml 
+//  -Jjmeter.save.saveservice.output_format=xml 
   -n -t my-test.jmx -l log.jtl -j run-log.txt
   -Jusers=100 -Jrampup=5000 -Jloops=480 -Jdataset="input-test-data"
-##  -JJWT_TOKEN="paste-token-here"
+//  -JJWT_TOKEN="paste-token-here"
   > "output-result-file.txt" 
-'''
+```
 
 ## about XSD for report out
 the XSD files are included in jmeter installation folders
