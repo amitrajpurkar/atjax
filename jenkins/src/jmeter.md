@@ -13,10 +13,11 @@ key jmeter config paramters
 
 ## main information
 http://jmeter.apache.org/usermanual/test_plan.html
-** <span style="color:red">if 10 threads are used
+
+**if <span style="color:red">10 threads are used
 and ramp up period is 100 sec
-then jmeter will take 100 seconds to get all 10 threads up and running.
-Each thread will start 10 seconds (100/10) after the previous thread was begun</span>
+then jmeter will take 100 seconds to get all 10 threads up and running.</span>
+Each thread will start 10 seconds (100/10) after the previous thread was begun
 If there are 30 threads and ramp up is 120 seconds, 
 then each successive thread will be delayed by 4 seconds **
 
