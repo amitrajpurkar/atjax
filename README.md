@@ -1,20 +1,10 @@
 # atjax
-house collection of projects i did at Jax; Add the key frameworks and noteworthy techniques
+house collection of projects that gave me valuable experience at Jax; 
+Capture noteworthy techniques that should be kept in sight
 
-### for ideal backend services
-Following non-funtional features will make a big difference in producing a High Quality product that can last test of time.
-below usecases/ reference implementations, can be seen
-* logEvents for capturing meaningful data for machine learning
-* logRecord that records severside details and contains individual logEvent
-* logForwarder that writes or delegates log-writing to platforms like Splunk or ELK so that meaningful dashboards, controls/ alerts can be done
-* Aspects for intercepting at controller, service layer entry-exit points
-* use aspects for capturing logs, measuring response times, using circuit breakers for SLA timeouts
-* circuitBreaker implementation for wait-periods or timeouts
-* configProperties making possible grouping of application properties as java objects
-* swagger documentation
-* unit test cases for documenting different scenarios that needs to be handled by service-layer and controllers
-* arch-unit test cases to ensuring the application code structure is following desired patterns
-* jacoco test coverage to keep tap of testability and coverage of your code
+### key usecase captured
+* quality features for backend services
+* these non functional features are desired for a high quality API services supporting a business critical system
 
 
 ### other usecases
