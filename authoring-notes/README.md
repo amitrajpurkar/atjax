@@ -24,10 +24,15 @@ getting back on our focus area...
 | Design Gurus |Paid |Proprietary |:---- |:---- |tbd |
 | BookBaby |Paid |Proprietary |:---- |:---- |tbd |
 
-
-we would like to know the top 3 publishers, 
+<br/><br/>
+#### we would like to know the top 3 publishers, 
 * that allow you to draft the book, 
-* {+ easy for onboarding by tech stack +}
+* ``` easy for onboarding by tech stack ```
 * easy on your pocket, 
 * not having a time-bound target 
 * allow you to publish book whenever you are ready
+
+
+**what others have experienced**
+tried to see if someone had done such research before
+ * one [done by Davide Barranca](https://www.davidebarranca.com/2019/10/2019-10-15-leanpub-alternatives-imho/)
