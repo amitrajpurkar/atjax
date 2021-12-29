@@ -23,3 +23,11 @@ getting back on our focus area...
 | Bookdown |Free |Open Source |:---- |[site](https://bookdown.org/) |tbd |
 | Design Gurus |Paid |Proprietary |:---- |:---- |tbd |
 | BookBaby |Paid |Proprietary |:---- |:---- |tbd |
+
+
+we would like to know the top 3 publishers, 
+* that allow you to draft the book, 
+* {+ easy for onboarding by tech stack +}
+* easy on your pocket, 
+* not having a time-bound target 
+* allow you to publish book whenever you are ready
