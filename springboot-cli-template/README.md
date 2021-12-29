@@ -17,8 +17,8 @@ basically we need to try out small utilities from time to time.
 
 ### tech stack
 * java
-* springboot
-* junit
+* [springboot](https://start.spring.io/)
+* [junit](https://junit.org/junit5/)
 
 
 ### references
