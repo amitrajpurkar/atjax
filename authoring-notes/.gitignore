@@ -3,3 +3,6 @@
 
 # Ignore Gradle build output directory
 build
+
+# ignore specific files/ folders
+*.md.backup
