@@ -39,7 +39,7 @@ public class Application implements CommandLineRunner {
     private void printBeansInAppContext(ApplicationContext ctx) {
         if (logger.isDebugEnabled()) {
             logger.debug("###################################");
-            logger.debug("let us inspect the beans initialized by springboot");
+            logger.debug("inspect beans initialized by springboot");
             logger.debug("###################################");
         }
         String[] beanNames = ctx.getBeanDefinitionNames();
