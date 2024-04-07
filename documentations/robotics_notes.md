@@ -5,13 +5,13 @@
 
 ## Season of 2024: Crescendo
 
-** Talahasee: Mar 17 to 19, 2024 (T,F,S) **
+**Talahasee: Mar 17 to 19, 2024 (T,F,S)**
  * Team 118, Robonauts was extra-ordinary!
  * we had issues with software configurations??
  * carpet sepcifications were different?
  * we needed last minute tweaks to get robot working to a standard
 
-** Orlando: Mar 21 to 23, 2024 (T,F,S) **
+**Orlando: Mar 21 to 23, 2024 (T,F,S)**
  * Team 186, Resistance went full steam! reached semi-finals; had impressive performance
  * Team 86 reached "Lower Bracket - Round 5 - Match 13" and we were in Alliance 4.
  * target: we need to be in Alliance 1 or 2; these are usually made up of top ranking teams
@@ -29,7 +29,7 @@
 
 ### need for one more full time software engineer volunteer on the team
 
-** what is the ask? **
+**what is the ask?**
  * full time commitment during the full season and beyond 
  * absolute crunch time: Jan 1st till March end. M-T: 5pm till 10pm; S-S: 1pm - 10pm
  * ramp up time for new team: Sep/ Oct till Dec: frequency? time-expectations?
@@ -47,4 +47,7 @@
 
  ---
 
- ** what options do we have? **
+ **what options do we have?**
+ * to be documented
+
+
