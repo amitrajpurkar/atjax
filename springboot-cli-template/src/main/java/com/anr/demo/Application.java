@@ -1,5 +1,7 @@
 package com.anr.demo;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.Arrays;
 
 import org.slf4j.Logger;
@@ -33,7 +35,21 @@ public class Application implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        printBeansInAppContext(context);
+        checkPGConn();
+        // printBeansInAppContext(context);
+    }
+
+    private void checkPGConn() {
+        Connection c = null;
+        try {
+            Class.forName("org.postgresql.Driver");
+            c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/sonarqube", "sonarqube", "admin");
+            logger.debug("Opened database successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.debug(e.getClass().getName() + ": " + e.getMessage());
+        }
+        logger.debug("end of method");
     }
 
     private void printBeansInAppContext(ApplicationContext ctx) {
